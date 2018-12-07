@@ -25,3 +25,16 @@ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 - Dependencies for building packages
 sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+3. Thiết lập môi trường phát triển;
+- Kiểm tra các biến môi trường xem đã được thiết lập chưa:
+printenv | grep ROS
+- Setup
+source /opt/ros/kinetic/setup.bash
+- Tạo workspace làm việc:
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/
+$ catkin_make
+- Source file setup
+source devel/setup.bash
+- Kiểm tra lại:
+ echo $ROS_PACKAGE_PATH
