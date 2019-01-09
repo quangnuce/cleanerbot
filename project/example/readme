@@ -1,4 +1,6 @@
 Project vi du minh hoa
-talker-listener : vi du topic don gian
-sender-subcriber: vi du topic voi kieu message tuy bien
-add_two_ints_client-add_two_ints_server: vi du service don gian
+Package: beginner_tutorials
+Gom cac node:
+talker, listener : vi du topic don gian
+sender, subcriber: vi du topic voi kieu message tuy bien
+add_two_ints_client, add_two_ints_server: vi du service don gian
