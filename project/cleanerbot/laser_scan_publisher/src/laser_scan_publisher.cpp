@@ -35,50 +35,63 @@
 * Author: Eitan Marder-Eppstein
 *********************************************************************/
 #include <ros/ros.h>
+#include "sensor_msgs/Range.h"
 #include <sensor_msgs/LaserScan.h>
+unsigned int num_readings = 150;
+  double laser_frequency = 1000;
+  double ranges[150];
+  double intensities[150];
+  int overround=0;
+ ros::Publisher scan_pub;
+ros::Subscriber sub;
+void rangeCallback(const sensor_msgs::Range::ConstPtr& range_data)
+{
+  //range = range_data->range;
+int angle=(int)(range_data->field_of_view)-15;
+	ranges[(int)(range_data->field_of_view)-15]=range_data->range;
+  ROS_INFO("I heard: [%f],[%f]", range_data->range,range_data->field_of_view);
+	
+	if(angle==0){
+		ROS_INFO("broadcast /scan");
+		for(unsigned int i = 0; i < num_readings; ++i){
+    			//  ranges[i] = count;
+      			intensities[i] =0;
+    		}
+    		ros::Time scan_time = ros::Time::now();
+
+    		//populate the LaserScan message
+    		sensor_msgs::LaserScan scan;
+    		scan.header.stamp = scan_time;
+    		scan.header.frame_id = "laser_frame";
+    		scan.angle_min = -1.3089;
+    		scan.angle_max = 1.3089;
+    		scan.angle_increment = 2.617 / num_readings;
+    		scan.time_increment = 50;
+    		scan.range_min = 0.2;
+    		scan.range_max = 4.0;
+
+    		scan.ranges.resize(num_readings);
+    		scan.intensities.resize(num_readings);
+    		for(unsigned int i = 0; i < num_readings; ++i){
+      			scan.ranges[i] = ranges[i];
+      			scan.intensities[i] = intensities[i];
+    		}
+
+    		scan_pub.publish(scan);	
+	}
+
+
+}
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "laser_scan_publisher");
-
-  ros::NodeHandle n;
-  ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 50);
-
-  unsigned int num_readings = 100;
-  double laser_frequency = 40;
-  double ranges[num_readings];
-  double intensities[num_readings];
+   ros::init(argc, argv, "laser_scan_publisher");
+ros::NodeHandle n;
+  scan_pub= n.advertise<sensor_msgs::LaserScan>("scan", 1000);
+ sub= n.subscribe("range_data", 50, rangeCallback);
 
   int count = 0;
-  ros::Rate r(1.0);
-  while(n.ok()){
-    //generate some fake data for our laser scan
-    for(unsigned int i = 0; i < num_readings; ++i){
-      ranges[i] = count;
-      intensities[i] = 100 + count;
-    }
-    ros::Time scan_time = ros::Time::now();
-
-    //populate the LaserScan message
-    sensor_msgs::LaserScan scan;
-    scan.header.stamp = scan_time;
-    scan.header.frame_id = "laser_frame";
-    scan.angle_min = -1.57;
-    scan.angle_max = 1.57;
-    scan.angle_increment = 3.14 / num_readings;
-    scan.time_increment = (1 / laser_frequency) / (num_readings);
-    scan.range_min = 0.0;
-    scan.range_max = 100.0;
-
-    scan.ranges.resize(num_readings);
-    scan.intensities.resize(num_readings);
-    for(unsigned int i = 0; i < num_readings; ++i){
-      scan.ranges[i] = ranges[i];
-      scan.intensities[i] = intensities[i];
-    }
-
-    scan_pub.publish(scan);
-    ++count;
-    r.sleep();
-  }
+ ros::Rate loop_rate(1000);
+  ros::spin();
+ 
 }
 
