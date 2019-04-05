@@ -1,0 +1,23 @@
+<launch>
+  <master auto="start"/>
+ 
+
+  <include file="$(find navigation_stage)/move_base_config/move_base.xml"/>
+ 
+  <include file="$(find navigation_stage)/move_base_config/slam_hectormapping.xml"/>  
+<include file="$(find astra_launch)/launch/astra.launch"/> 
+
+<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+
+  <param name="camera_info" value="/camera/depth/camera_info"/>
+   <remap from="image" to="/camera/depth/image_raw"/>
+ <param name="scan_time" value="0.033" />
+    <param name="range_min" value="0.4" />
+    <param name="range_max" value="2.0" />
+</node>
+<node pkg="tf" type="static_transform_publisher" name="map2odom" args="0 0 0 0 0 0 map odom 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_to_odom" args="0 0 0 0 0 0 odom base_link 100" />
+<node pkg="tf" type="static_transform_publisher" name="laser_to_base" args="0 0 0 0 0 0 base_link laser 100" />
+<node pkg="tf" type="static_transform_publisher" name="camera_to_laser" args="0 0 0 0 0 0 laser camera_link 100" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find navigation_stage)/single_robot.rviz" />
+</launch>
