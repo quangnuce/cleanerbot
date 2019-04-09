@@ -9,7 +9,14 @@ Package cài đặt:
 - TF (sudo apt-get install ros-kinetic-tf)
 Các bước setup:
 1. Cài đặt Raspberrian Desktop trên Raspberry PI 3
-2. Cài ROS và các package lên Raspberry
+2. Cài ROS và các package lên Raspberry:
+  2.1 Cài đặt ROS
+  2.2 Cài đặt NavigationStack và TF
+  2.3 Copy các package trong thư mục main vào thư mục catkin_ws/src trên Raspberry
+  2.4 Biên dịch và source:
+    - cd ~/catkin_ws
+    - catkin_make
+    - source ./devel/setup.bash
 3. Kết nối Raspberry với RPLidar và cụm điều khiển động cơ
 4. Gắn các thiết bị lên robot
 5. Thử nghiệm
@@ -24,4 +31,9 @@ Các bước setup:
     + Chạy các lệnh sau ở các máy để thiết lập máy rosmater là máy ROS master
     export ROS_MASTER_URI=http://rosmater:11311
     + Restart roscore và launch project 
-  - Chạy ROS trên rasberry và mở rviz trên máy theo dõi, chọn các topic để xem
+  - Chạy ROS trên rasberry và mở rviz trên máy theo dõi, chọn các topic để xem:
+    + Trên Raspberry, chạy launch file :
+      - roslaunch src/navigation_stage/launch/robot_config_rplidar.launch 
+    + Trên máy theo dõi, mở rviz và rqt_graph để xem (cần cài đặt rviz nếu chưa có trên máy theo dõi)
+      - rosrun rviz rviz
+      - rosrun rqt_graph rqt_graph
