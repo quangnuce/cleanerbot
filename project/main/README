@@ -1,5 +1,27 @@
 Main project:
-Navigation Stack
-Hector mapping
-Astra S
-RPLidar A1
+Các package sử dụng trong đề tài:
+Trong catkin_ws/src
+- Hector SLAM : cung cấp map và odometry
+- NavigationStage: chứa các launch file chạy project và navigation stack
+- RPLidar ROS: driver và node chạy RPLidar A1, cung cấp dữ liệu khoảng cách qua topic /scan
+Package cài đặt:
+- NavigationStack ( sudo apt-get install ros-kinetic-navigation )
+- TF (sudo apt-get install ros-kinetic-tf)
+Các bước setup:
+1. Cài đặt Raspberrian Desktop trên Raspberry PI 3
+2. Cài ROS và các package lên Raspberry
+3. Kết nối Raspberry với RPLidar và cụm điều khiển động cơ
+4. Gắn các thiết bị lên robot
+5. Thử nghiệm
+5.1 Xem hoạt động của robot trên rviz trên máy khác:
+  - Thiết lập ROS multiple machines (http://wiki.ros.org/ROS/Tutorials/MultipleMachines), câú hình để ROS trên raspberry là master
+    + Đảm bảo các máy đều chung mạng LAN và có thể kết nối được với nhau
+    + Xem ip của từng máy
+    + Mở file hosts ở các máy, đặt cấu hình host cho các máy với tên của các máy đều thống nhất giữa các máy
+    VD: thêm vào file hosts ở các máy các dòng sau
+    192.168.3.106 rosmaster
+    192.168.3.106 rosviewer
+    + Chạy các lệnh sau ở các máy để thiết lập máy rosmater là máy ROS master
+    export ROS_MASTER_URI=http://rosmater:11311
+    + Restart roscore và launch project 
+  - Chạy ROS trên rasberry và mở rviz trên máy theo dõi, chọn các topic để xem
