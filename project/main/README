@@ -10,7 +10,7 @@ Package cài đặt:
 Các bước setup:
 1. Cài đặt Raspberrian Desktop trên Raspberry PI 3
 2. Cài ROS và các package lên Raspberry:
-  2.1 Cài đặt ROS
+  2.1 Cài đặt ROS (http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi)
   2.2 Cài đặt NavigationStack và TF
   2.3 Copy các package trong thư mục main vào thư mục catkin_ws/src trên Raspberry
   2.4 Biên dịch và source:
