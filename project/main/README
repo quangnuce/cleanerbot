@@ -25,6 +25,7 @@ Các bước setup:
     + Đảm bảo các máy đều chung mạng LAN và có thể kết nối được với nhau
     + Xem ip của từng máy
     + Mở file hosts ở các máy, đặt cấu hình host cho các máy với tên của các máy đều thống nhất giữa các máy
+    sudo -i gedit /etc/hosts
     VD: thêm vào file hosts ở các máy các dòng sau
     192.168.3.106 rosmaster
     192.168.3.106 rosviewer
