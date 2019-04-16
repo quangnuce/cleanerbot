@@ -4,3 +4,8 @@ Gom cac node:
 talker, listener : vi du topic don gian
 sender, subcriber: vi du topic voi kieu message tuy bien
 add_two_ints_client, add_two_ints_server: vi du service don gian
+
+
+Chuyển cmd_vel thành tốc độ 2 bánh:
+left_speed_out = cmd_vel.linear.x - cmd_vel.angular.z*ROBOT_WIDTH/2
+right_speed_out = cmd_vel.linear.x + cmd_vel.angular.z*ROBOT_WIDTH/2
