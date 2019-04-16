@@ -30,7 +30,7 @@ Các bước setup:
     192.168.3.106 rosmaster
     192.168.3.106 rosviewer
     + Chạy các lệnh sau ở các máy để thiết lập máy rosmater là máy ROS master
-    export ROS_MASTER_URI=http://rosmater:11311
+    export ROS_MASTER_URI=http://rosmaster:11311
     + Restart roscore và launch project 
   - Chạy ROS trên rasberry và mở rviz trên máy theo dõi, chọn các topic để xem:
     + Trên Raspberry, chạy launch file :
