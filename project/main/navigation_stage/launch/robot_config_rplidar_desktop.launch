@@ -6,11 +6,12 @@
  
   <include file="$(find navigation_stage)/move_base_config/slam_hectormapping.xml"/>  
 <include file="$(find rplidar_ros)/launch/rplidar.launch"/> 
+<node pkg="odometry" type="odometry" name="odometry_publisher" />
 
+<node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0 world map 100" />
+<node pkg="tf" type="static_transform_publisher" name="world2odom" args="0 0 0 0 0 0 world odom 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="map2odom" args="0 0 0 0 0 0 map odom 100" />
-<node pkg="tf" type="static_transform_publisher" name="base_to_odom" args="0 0 0 0 0 0 odom base_link 100" />
 <node pkg="tf" type="static_transform_publisher" name="laser_to_base" args="0 0 0 0 0 0 base_link laser 100" />
-<node pkg="tf" type="static_transform_publisher" name="camera_to_laser" args="0 0 0 0 0 0 laser camera_link 100" />
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find navigation_stage)/single_robot.rviz" />
+
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(find navigation_stage)/single_robot.rviz" />
 </launch>
