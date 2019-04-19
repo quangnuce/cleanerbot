@@ -3,27 +3,12 @@
 #include <nav_msgs/Odometry.h>
 geometry_msgs::Pose pose;
 geometry_msgs::Pose prepose;
-ros::Time current_time, last_time;
- double vx = 0.0;
-  double vy = 0.0;
-  double vth = 0.0;
+
+
 
 void p_sub (const geometry_msgs::PoseStamped::ConstPtr& p_msg) {
-	prepose=pose;
-       pose=p_msg->pose;
-	last_time = current_time;
-	current_time = ros::Time::now();
- 	double dt = (current_time - last_time).toSec();
-	vx=(pose.position.x-prepose.position.x)/dt;
-	vy=(pose.position.y-prepose.position.y)/dt;
-	tf::Quaternion q(prepose.orientation.x, prepose.orientation.y, prepose.orientation.z, prepose.orientation.w);
-	tf::Matrix3x3 m(q);
-	double roll, pitch, oyaw,yaw;
-	m.getRPY(roll, pitch, oyaw);
-	tf::Quaternion q2(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
-	tf::Matrix3x3 m2(q2);	
-	m2.getRPY(roll, pitch, yaw);
-        vth=yaw-oyaw;
+	
+       	pose=p_msg->pose;				
 
 }
 int main(int argc, char** argv){
@@ -41,6 +26,10 @@ int main(int argc, char** argv){
   last_time = ros::Time::now();
 
   ros::Rate r(1.0);
+ double vx = 0.0;
+  double vy = 0.0;
+  double vth = 0.0;
+
   while(n.ok()){
 
     ros::spinOnce();               // check for incoming messages
@@ -48,8 +37,20 @@ int main(int argc, char** argv){
 
     //compute odometry in a typical way given the velocities of the robot
     double dt = (current_time - last_time).toSec();
-
-
+	vx=(pose.position.x-prepose.position.x)/dt;
+	vy=(pose.position.y-prepose.position.y)/dt;
+	tf::Quaternion q(prepose.orientation.x, prepose.orientation.y, prepose.orientation.z, prepose.orientation.w);
+	tf::Matrix3x3 m(q);
+	double roll, pitch, oyaw,yaw;
+	m.getRPY(roll, pitch, oyaw);
+	tf::Quaternion q2(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
+	tf::Matrix3x3 m2(q2);	
+	m2.getRPY(roll, pitch, yaw);
+        vth=(yaw-oyaw)/dt;
+	
+	
+	//ROS_INFO("dt= %lf,pose.position.x=%lf, yaw=%lf ", dt,pose.position.x,yaw);
+	
     //since all odometry is 6DOF we'll need a quaternion created from yaw
     geometry_msgs::Quaternion odom_quat = pose.orientation;
 
@@ -85,6 +86,7 @@ int main(int argc, char** argv){
     odom_pub.publish(odom);
 
     last_time = current_time;
+    prepose=pose;
     r.sleep();
   }
 }
