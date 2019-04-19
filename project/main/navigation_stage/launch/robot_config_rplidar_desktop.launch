@@ -1,12 +1,12 @@
 <launch>
   <master auto="start"/>
- 
+
 
   <include file="$(find navigation_stage)/move_base_config/move_base.xml"/>
  
   <include file="$(find navigation_stage)/move_base_config/slam_hectormapping.xml"/>  
 <include file="$(find rplidar_ros)/launch/rplidar.launch"/> 
-<node pkg="odometry" type="odometry" name="odometry_publisher" />
+<node pkg="odometry" type="odometry" name="odometry_publisher"  output="screen" />
 
 <node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0 world map 100" />
 <node pkg="tf" type="static_transform_publisher" name="world2odom" args="0 0 0 0 0 0 world odom 100" />
