@@ -15,9 +15,9 @@ int main(int argc, char** argv){
   ros::init(argc, argv, "odometry_publisher");
 
   ros::NodeHandle n;
-  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
+  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 100);
   tf::TransformBroadcaster odom_broadcaster;
-  ros::Subscriber cmd_vel=n.subscribe("slam_out_pose" , 10 ,p_sub);
+  ros::Subscriber cmd_vel=n.subscribe("slam_out_pose" , 100 ,p_sub);
 
 
  
@@ -25,7 +25,7 @@ int main(int argc, char** argv){
   current_time = ros::Time::now();
   last_time = ros::Time::now();
 
-  ros::Rate r(1.0);
+  ros::Rate r(10);
  double vx = 0.0;
   double vy = 0.0;
   double vth = 0.0;
