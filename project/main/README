@@ -11,8 +11,18 @@ Các bước setup:
 1. Cài đặt Raspberrian Desktop trên Raspberry PI 3
 2. Cài ROS và các package lên Raspberry:
   2.1 Cài đặt ROS (http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi)
-  2.2 Cài đặt NavigationStack và TF
-  2.3 Copy các package trong thư mục main vào thư mục catkin_ws/src trên Raspberry
+  2.2 Cài đặt NavigationStack và TF:
+  - sudo apt-get install ros-kinetic-navigation
+  - sudo apt-get install ros-kinetic-tf
+  2.3 Cài đặt các gói sau:
+  - Cài đặt driver cho RPlidar: 
+      + tải và giải nén gói rplidar trên https://github.com/Slamtec/rplidar_ros 
+      + Copy gói rplidar vào catkin_ws/src
+      + biên dịch lại catkin_ws: 
+      sudo ~/catkin_ws
+      catkin_make
+  - Cài đặt Hector SLAM: sudo apt-get install ros-kinetic-hector-slam
+  - Cài đặt Odometry: tạo package mới Odometry, tạo file xử lý Odometry như sau:
   2.4 Biên dịch và source:
     - cd ~/catkin_ws
     - catkin_make
