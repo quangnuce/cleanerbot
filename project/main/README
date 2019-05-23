@@ -7,6 +7,7 @@ Trong catkin_ws/src
 Package cài đặt:
 - NavigationStack ( sudo apt-get install ros-kinetic-navigation )
 - TF (sudo apt-get install ros-kinetic-tf)
+- ExploreLite:sudo apt install ros-kinetic-multirobot-map-merge ros-kinetic-explore-lite
 Các bước setup:
 1. Cài đặt Raspberrian Desktop trên Raspberry PI 3
 2. Cài ROS và các package lên Raspberry:
