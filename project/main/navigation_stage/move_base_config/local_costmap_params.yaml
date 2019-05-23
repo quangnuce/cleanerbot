@@ -2,7 +2,7 @@
 
 local_costmap:
   #We'll publish the voxel grid used by this costmap
-  publish_voxel_map: true
+  #publish_voxel_map: true
 
   #Set the global and robot frames for the costmap
   global_frame: odom
@@ -18,6 +18,6 @@ local_costmap:
   rolling_window: true
   width: 6.0
   height: 6.0
-  resolution: 0.025
+  resolution: 0.1
   origin_x: 0.0
   origin_y: 0.0
