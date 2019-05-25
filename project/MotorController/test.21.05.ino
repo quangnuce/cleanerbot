@@ -5,10 +5,13 @@
 #define STEP2 7
 #define DIR2 6
 #define VACUMM 32
+#define HS 0.5f
+;
 float x;
 float z;
 long step1,step2;
 long kc,kc2;
+
 ros::NodeHandle nh;
 void velCallback(  const geometry_msgs::Twist& vel_cmd)
 {
@@ -42,18 +45,20 @@ void tinh (float x)
   sprintf(log_msg,"x=%s,step1=%ld, kc=%ld",str_x,step1,kc);
   nh.loginfo(log_msg);
 }
+
 void tinh2 (float z)
 {
   float abs_a=z>0?z:-z;
+  abs_a=abs_a;//*HS; 
   step2 = abs_a*0.15 / 0.00047124;
   kc2 = 1000000 / step2;//microsecond
-  kc2=kc2/2;
+  kc2=kc2;
   //in log
-  //char log_msg[50];
-  //char str_x[6];
-  //dtostrf(x, 4, 2, str_x);
-  //sprintf(log_msg,"x=%s,step1=%ld, kc=%ld",str_x,step1,kc);
-  //nh.loginfo(log_msg);
+  char log_msg[50];
+  char str_x[6];
+  dtostrf(abs_a, 4, 2, str_x);
+  sprintf(log_msg,"x=%s,step1=%ld, kc=%ld",str_x,step2,kc2);
+  nh.loginfo(log_msg);
 }
 //long buoc (float x, float z)
 //{
@@ -96,8 +101,7 @@ void loop()
   //nh.loginfo(log_msg);
   //tiến thẳng
   float abs_a=z>0?z:-z;
-  if (abs_a <= 0.264){
-    
+  if (abs_a <= 0.2){ 
     char log_msg[50];
 
   sprintf(log_msg,"di thang step1=%ld, kc=%ld",step1,kc);
@@ -152,7 +156,7 @@ void loop()
    // if(x==0&&z==0)
      // delay(100);  
     
-    //x=0;
+    //x=0.001;
     //z=0;
 
 }
