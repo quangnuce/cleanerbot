@@ -9,7 +9,7 @@
 
 <node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0 world map 100" />
 <node pkg="tf" type="static_transform_publisher" name="world2odom" args="0 0 0 0 0 0 world odom 100" />
-<node pkg="tf" type="static_transform_publisher" name="laser_to_base" args="0.45 0 0.05 0 0 0 base_link laser 100" />
+<node pkg="tf" type="static_transform_publisher" name="laser_to_base" args="0.1 0 0.05 0 0 0 base_link laser 100" />
 
  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find navigation_stage)/single_robot.rviz" />
 </launch>
